@@ -12,3 +12,7 @@ hs_err_pid*
 .metadata/*
 
 *.snap
+
+.metadata/.plugins/org.eclipse.core.resources/.projects/HLTVscraper/.syncinfo.snap
+
+*.snap
