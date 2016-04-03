@@ -1,6 +1,11 @@
 package us.noop.hltv;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,7 +15,7 @@ public class Test {
 		HashMap<String, Team> teams = new HashMap<String, Team>();
 		ArrayList<MatchObject> games = null;
 		try {
-			games = HLTVScraper.get(10);
+			games = HLTVScraper.get(365);
 		} catch (IOException e) {
 			System.err.println("uly fix ur shit");
 			e.printStackTrace();
@@ -49,7 +54,16 @@ public class Test {
 			}
 
 		}
-		System.out.println(teams.values());
+		File f = new File("C:\\Users\\Daniel\\Documents\\output.txt");
+		try {
+			PrintStream o = new PrintStream(f);
+			for(Team t:teams.values()) {
+				o.println(t);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
