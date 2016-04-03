@@ -28,4 +28,8 @@ public class Team {
 		t2.ELO += c * (0 - ev);
 
 	}
+	public String toString(){
+		return TeamName + ":" + ELO;
+		
+	}
 }
