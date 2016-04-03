@@ -28,6 +28,12 @@ public class Team {
 		t2.ELO += c * (0 - ev);
 
 	}
+	public void tie(Team t2, int bestOfX) {
+		double expectedOutcome = expectedOutcome(t2);
+		double c = 20 + (10 * ((bestOfX -(bestOfX % 2))/2));
+		ELO += c*(0.5 - expectedOutcome);
+		t2.ELO +=c*(0.5 - expectedOutcome);
+	}
 	public String toString(){
 		return TeamName + ":" + ELO;
 		

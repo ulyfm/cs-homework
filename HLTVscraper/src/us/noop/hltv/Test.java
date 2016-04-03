@@ -10,7 +10,7 @@ public class Test {
 		HashMap<String, Team> teams = new HashMap<String, Team>();
 		ArrayList<MatchObject> games = null;
 		try {
-			games = HLTVScraper.get(40);
+			games = HLTVScraper.get(10);
 		} catch (IOException e) {
 			System.err.println("uly fix ur shit");
 			e.printStackTrace();
@@ -19,20 +19,34 @@ public class Test {
 		Team winner;
 		Team loser;
 		for (MatchObject m : games) {
-			if (teams.containsKey(m.getWinner())) {
-				winner = teams.get(m.getWinner());
+			if (teams.containsKey(m.getTeam1())) {
+				winner = teams.get(m.getTeam1());
 			} else {
-				winner = new Team(m.getWinner());
-				teams.put(m.getWinner(), winner);
+				winner = new Team(m.getTeam1());
+				teams.put(m.getTeam1(), winner);
 			}
 
-			if (teams.containsKey(m.getLoser())) {
-				loser = teams.get(m.getLoser());
+			if (teams.containsKey(m.getTeam2())) {
+				loser = teams.get(m.getTeam2());
 			} else {
-				loser = new Team(m.getLoser());
-				teams.put(m.getLoser(), loser);
+				loser = new Team(m.getTeam2());
+				teams.put(m.getTeam2(), loser);
 			}
-			teams.get(m.getWinner()).win(teams.get(m.getLoser()), 1);
+			String map = m.getMap();
+			int box = 1;
+			if(m.getMap().contains("" + 2))
+				box = 2;
+			if (m.getMap().contains("" + 3))
+				box = 3;
+			if (m.getMap().contains("" + 5))
+				box = 5;
+			if (m.getTeam1Rounds() > m.getTeam2Rounds())
+				teams.get(m.getTeam1()).win(teams.get(m.getTeam2()), box);
+			if (m.getTeam1Rounds() < m.getTeam2Rounds())
+				teams.get(m.getTeam2()).win(teams.get(m.getTeam1()), box);
+			if(m.getTeam1Rounds() == m.getTeam2Rounds()) {
+				teams.get(m.getTeam1()).tie(teams.get(m.getTeam2()), box);
+			}
 
 		}
 		System.out.println(teams.values());
