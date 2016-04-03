@@ -11,10 +11,10 @@ public class MatchObject {
 	public Date getTime(){
 		return time;
 	}
-	public String getWinner(){
+	public String getTeam1(){
 		return team1;
 	}
-	public String getLoser(){
+	public String getTeam2(){
 		return team2;
 	}
 	public int getTeam1Rounds(){

@@ -65,8 +65,11 @@ public class Scraper {
 					
 					mo.team2 = yee.get(3).children().first().ownText();
 					
+					try{
 					mo.id = Integer.parseInt(yee.get(4).children().first().attr("href").substring(7).split("-")[0]);
-					
+					}catch(Exception e){
+						mo.id = -1;
+					}
 					System.out.println(mo);
 					
 					ret.add(mo);
