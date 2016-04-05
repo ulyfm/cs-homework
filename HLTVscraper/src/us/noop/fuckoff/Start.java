@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Scanner;
 
 import org.joda.time.DateTimeZone;
@@ -42,9 +39,9 @@ public class Start {
 				mo.t1rounds = Integer.parseInt(a[5]);
 				mo.t2rounds = Integer.parseInt(a[6]);
 				
-				matches.add(mo);
-				
+				matches.add(mo);	
 			}
+			s.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -100,10 +97,12 @@ public class Start {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}else if(command.equals("display")){
+		}else if(command.equals("displaydb")){
 			for(MatchObject mo : matches){
 				System.out.println(mo.toString());
 			}
+		}else if(command.equals("exit") || command.equals("quit")){
+			System.exit(1);
 		}
 	}
 }
