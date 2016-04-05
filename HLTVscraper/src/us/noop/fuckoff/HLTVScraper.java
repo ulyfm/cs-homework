@@ -68,7 +68,7 @@ public class HLTVScraper {
 					}catch(Exception e){
 						mo.id = -1;
 					}
-					System.out.println(mo);
+					//System.out.println(mo);
 					
 					ret.add(mo);
 				}
