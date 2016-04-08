@@ -26,6 +26,13 @@ public class Team {
 			//System.out.println(ELO);
 		}
 	}
+	public void tie(Team t2) {
+		double expectedOutcome = expectedOutcome(t2);
+		double c = 30;
+		double change = c * (0.5 - expectedOutcome);
+		ELO += change;
+		t2.ELO -= change;
+	}
 	public String toString() {
 		return TeamName + " :" + ELO;
 

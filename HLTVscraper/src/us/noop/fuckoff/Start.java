@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import org.joda.time.DateTimeZone;
@@ -18,9 +19,11 @@ public class Start {
 		new Start();
 	}
 
+	@SuppressWarnings("resource")
 	public Start() {
 		System.out.println("CS Betting Tool");
 		System.out.println("version " + Constants.VERSION);
+		Scanner sc = new Scanner(System.in);
 		try {
 			File f = new File("matches");
 
@@ -32,7 +35,8 @@ public class Start {
 					PrintStream p = new PrintStream(new File("matches"));
 					matches = new ArrayList<MatchObject>();
 					for (MatchObject mo : ar) {
-						p.println(mo.time.toString() + ";;" + mo.id + ";;" + mo.map + ";;" + mo.team1 + ";;" + mo.team2
+						p.println(mo.time.toString() + ";;" + mo.id + ";;"
+								+ mo.map + ";;" + mo.team1 + ";;" + mo.team2
 								+ ";;" + mo.t1rounds + ";;" + mo.t2rounds);
 						matches.add(mo);
 					}
@@ -58,21 +62,20 @@ public class Start {
 
 					matches.add(mo);
 				}
-				
-				
-				
+
 				System.out.println("Downloading new matches...");
 				LocalDate today = new LocalDate(DateTimeZone.forID("CET"));
 
 				LocalDate last = matches.get(0).time;
-				System.out.println(matches.size() + " matches in database, " + last.toString() + " is the most recent date.");
-				
+				System.out.println(matches.size() + " matches in database, "
+						+ last.toString() + " is the most recent date.");
 
 				int days = Days.daysBetween(last, today).getDays();
 
-				System.out.println("Downloading from " + (days - 1) + " days ago.");
+				System.out.println("Downloading from " + (days - 1)
+						+ " days ago.");
 				ArrayList<MatchObject> recent = HLTVScraper.get(days);
-				
+
 				for (int i = 0; i < matches.size(); ++i) {
 					for (MatchObject m : recent) {
 						if (matches.get(i).id == m.id) {
@@ -84,23 +87,21 @@ public class Start {
 				for (int j = recent.size() - 1; j >= 0; --j) {
 					matches.add(0, recent.get(j));
 				}
-				
+
 				System.out.println("Saving database...");
 				PrintStream p = new PrintStream(new File("matches"));
 				for (MatchObject mo : matches) {
-					p.println(mo.time.toString() + ";;" + mo.id + ";;" + mo.map + ";;" + mo.team1 + ";;" + mo.team2
-							+ ";;" + mo.t1rounds + ";;" + mo.t2rounds);
+					p.println(mo.time.toString() + ";;" + mo.id + ";;" + mo.map
+							+ ";;" + mo.team1 + ";;" + mo.team2 + ";;"
+							+ mo.t1rounds + ";;" + mo.t2rounds);
 				}
 				p.close();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		Scanner sc = new Scanner(System.in);
-
 		while (true) {
 			System.out.print("> ");
 
@@ -111,13 +112,24 @@ public class Start {
 	}
 
 	private void respond(String command) {
+		HashMap<String, Team> teams = new HashMap<String, Team>();
 		if (command.equals("displaydb")) {
 			for (MatchObject mo : matches) {
-				System.out.println(mo.toString());
+				if (!teams.containsKey(mo.team1))
+					teams.put(mo.team1, new Team(mo.team1));
+				if (!teams.containsKey(mo.team2))
+					teams.put(mo.team2, new Team(mo.team2));
+				if (mo.t1rounds > mo.t2rounds)
+					teams.get(mo.team1).win(teams.get(mo.team2));
+				else if (mo.t2rounds > mo.t1rounds)
+					teams.get(mo.team2).win(teams.get(mo.team1));
+				else {
+					teams.get(mo.team1).tie(teams.get(mo.team2));
+				}
 			}
 		} else if (command.equals("exit") || command.equals("quit")) {
 			System.exit(1);
-		}else{
+		} else {
 			System.out.println("unrecognized command");
 		}
 	}
