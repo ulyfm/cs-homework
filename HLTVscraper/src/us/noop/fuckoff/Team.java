@@ -1,7 +1,7 @@
 package us.noop.fuckoff;
 
 public class Team {
-	public double ELO;
+	private double ELO;
 	private String TeamName;
 
 	public Team(String name) {
@@ -10,7 +10,7 @@ public class Team {
 	}
 
 	public double expectedOutcome(Team t2) {
-		return 1 / (Math.pow(10, (-ELO + t2.ELO) / 400) + 1);
+		return 1 / (Math.pow(10, (-1 * GetELO() + t2.GetELO()) / 400) + 1);
 
 	}
 
@@ -21,8 +21,8 @@ public class Team {
 			// System.out.println("EO=" + expectedOutcome);
 			double c = 30;
 			double change = c * (1 - expectedOutcome);
-			ELO += change;
-			t2.ELO -= change;
+			SetELO(GetELO() + change);
+			t2.SetELO(t2.GetELO() - change);
 			//System.out.println(ELO);
 		}
 	}
@@ -30,11 +30,17 @@ public class Team {
 		double expectedOutcome = expectedOutcome(t2);
 		double c = 30;
 		double change = c * (0.5 - expectedOutcome);
-		ELO += change;
-		t2.ELO -= change;
+		SetELO(GetELO() + change);
+		t2.SetELO(t2.GetELO() + change);
 	}
 	public String toString() {
-		return TeamName + " :" + ELO;
+		return TeamName + " :" + GetELO();
 
+	}
+	public double GetELO() {
+		return ELO;
+	}
+	public void SetELO(double newELO) {
+		ELO = newELO;
 	}
 }
