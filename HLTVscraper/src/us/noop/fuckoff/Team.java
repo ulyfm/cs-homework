@@ -6,11 +6,11 @@ public class Team {
 
 	public Team(String name) {
 		TeamName = name;
-		ELO = 2000;
+		ELO = 0;
 	}
 
 	public double expectedOutcome(Team t2) {
-		return 1 / (Math.pow(10, (-1 * GetELO() + t2.GetELO()) / 400) + 1);
+		return 1 / (1 + Math.pow(10, (t2.GetELO() - this.GetELO()) / 400));
 
 	}
 
@@ -19,7 +19,7 @@ public class Team {
 		if (!this.equals(t2)) {
 			double expectedOutcome = expectedOutcome(t2);
 			// System.out.println("EO=" + expectedOutcome);
-			double c = 30;
+			double c = 0.1;
 			double change = c * (1 - expectedOutcome);
 			SetELO(GetELO() + change);
 			t2.SetELO(t2.GetELO() - change);
