@@ -1,4 +1,4 @@
-package us.noop.fuckoff;
+package us.noop.hltvV2;
 
 public class Utils {
 	public static int monthToInt(String month){

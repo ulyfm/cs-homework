@@ -1,4 +1,4 @@
-package us.noop.fuckoff;
+package us.noop.hltvV2;
 
 import org.joda.time.LocalDate;
 

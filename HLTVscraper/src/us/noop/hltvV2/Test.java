@@ -1,15 +1,12 @@
-package us.noop.fuckoff;
+//API keys
+//football-data.org: 7fc3aab5883b45eda8955aae69173bdf
+package us.noop.hltvV2;
 
 import java.util.Random;
 
 public class Test {
 	public static void main(String[] args) {
-		/*LCSTeam[] t = {
-				new LCSTeam("1", new Player("1"), new Player("1"), new Player(
-						"1"), new Player("1"), new Player("1")),
-				new LCSTeam("2", new Player("1"), new Player("1"), new Player(
-						"1"), new Player("1"), new Player("1")), new LCSTeam("3", new Player("1"), new Player("1"), new Player("1"), new Player("1"),new Player("1")), };
-		*/
+		
 		Team[] t = {
 				new Team("1"), new Team("2"), new Team ("3")
 		};

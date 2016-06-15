@@ -1,4 +1,4 @@
-package us.noop.fuckoff;
+package us.noop.hltvV2;
 import java.util.Scanner;
 
 import javax.swing.JApplet;

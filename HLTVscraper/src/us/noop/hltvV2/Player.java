@@ -1,4 +1,4 @@
-package us.noop.fuckoff;
+package us.noop.hltvV2;
 
 //View Team as structure as average of 5 player ELOs?
 public class Player extends Team{
